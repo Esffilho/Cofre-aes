@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cofre AES</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <span class="eyebrow">Projeto de criptografia</span>
+      <h1>Cofre AES</h1>
+      <p>Guarde seus segredos com AES-256-GCM.</p>
+      <div class="security-note">
+        <strong>Privacidade:</strong> a senha-mestra nunca é armazenada pelo servidor.
+      </div>
+    </header>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">1</span>
+        <div>
+          <h2>Criar cofre</h2>
+          <p>Escolha uma senha-mestra com pelo menos 8 caracteres.</p>
+        </div>
+      </div>
+      <form id="criar">
+        <label>Nome do cofre
+          <input name="nome" placeholder="Ex.: Cofre pessoal" required maxlength="120">
+        </label>
+        <label>Senha-mestra
+          <span class="password-field">
+            <input id="senha-criar" name="senha_mestra" type="password" minlength="8" maxlength="256" placeholder="Digite e confira" required>
+            <button type="button" class="toggle-password" data-target="senha-criar" aria-label="Mostrar senha">Mostrar</button>
+          </span>
+        </label>
+        <button class="primary" type="submit">Criar cofre</button>
+      </form>
+      <p class="hint">Atenção: anote o ID e a senha-mestra. Não há como recuperar a senha se ela for esquecida.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <span class="step">2</span>
+        <div>
+          <h2>Abrir cofre</h2>
+          <p>Use o ID exibido após a criação e a mesma senha-mestra.</p>
+        </div>
+      </div>
+      <form id="abrir">
+        <label>ID do cofre
+          <input id="cofre-id" name="id" placeholder="Cole o UUID do cofre" required>
+        </label>
+        <label>Senha-mestra
+          <span class="password-field">
+            <input id="senha-abrir" name="senha" type="password" minlength="8" maxlength="256" placeholder="Digite a senha-mestra" required>
+            <button type="button" class="toggle-password" data-target="senha-abrir" aria-label="Mostrar senha">Mostrar</button>
+          </span>
+        </label>
+        <button class="primary" type="submit">Abrir cofre</button>
+      </form>
+      <p class="hint">Se aparecer “senha-mestra incorreta”, confira se o ID e a senha pertencem ao mesmo cofre.</p>
+    </section>
+
+    <section id="conteudo" class="card" hidden>
+      <div class="section-heading">
+        <span class="step">3</span>
+        <div>
+          <h2>Segredos</h2>
+          <p>Adicione registros e clique em “Ver” para consultar uma senha.</p>
+        </div>
+      </div>
+      <form id="novo">
+        <label>Título
+          <input name="titulo" placeholder="Ex.: E-mail" required maxlength="200">
+        </label>
+        <label>Usuário
+          <input name="usuario" placeholder="Opcional" maxlength="200">
+        </label>
+        <label>URL
+          <input name="url" type="url" placeholder="Opcional" maxlength="2048">
+        </label>
+        <label>Senha do serviço
+          <span class="password-field">
+            <input id="senha-segredo" name="senha" type="password" placeholder="Senha a proteger" required maxlength="4096">
+            <button type="button" class="toggle-password" data-target="senha-segredo" aria-label="Mostrar senha">Mostrar</button>
+          </span>
+        </label>
+        <button class="primary" type="submit">Salvar segredo</button>
+      </form>
+      <div class="list-heading">
+        <h3>Segredos salvos</h3>
+        <button id="atualizar" type="button" class="secondary">Atualizar lista</button>
+      </div>
+      <ul id="lista"></ul>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
